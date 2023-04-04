@@ -1,6 +1,10 @@
+using On.Terraria.ID;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using BuffID = Terraria.ID.BuffID;
+using ItemID = Terraria.ID.ItemID;
+using ItemRarityID = Terraria.ID.ItemRarityID;
+using TileID = Terraria.ID.TileID;
 
 namespace mcraria.Content.Items.Consumables.Buckets
 {
@@ -20,12 +24,13 @@ namespace mcraria.Content.Items.Consumables.Buckets
 
             Item.value = Item.sellPrice(silver: 2);
             Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 1;
+
+            Item.consumable = false;
         }
 
-        public override void OnConsumeItem(Player player)
+        public override bool? UseItem(Player player)
         {
-            player.QuickSpawnItem(Item.GetSource_NaturalSpawn(), ItemID.EmptyBucket);
-
             // Get all player buffs
             for (int i = 0; i < player.CountBuffs(); ++i)
             {
@@ -36,6 +41,8 @@ namespace mcraria.Content.Items.Consumables.Buckets
                     i--;
                 }
             }
+
+            return true;
         }
 
         public override void AddRecipes()

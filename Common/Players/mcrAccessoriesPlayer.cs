@@ -18,6 +18,16 @@ namespace mcraria.Common.Players
             HasUndyingTotem = false;
         }
 
+        public override void PostNurseHeal(NPC nurse, int health, bool removeDebuffs, int price)
+        {
+            if (Main.rand.Next(0, 100) == 1)
+            {
+                Player.QuickSpawnItem(NPC.GetSource_NaturalSpawn(),
+                    ModContent.ItemType<Content.Items.Consumables.Buckets.MilkBucket>());
+            }
+            base.PostNurseHeal(nurse, health, removeDebuffs, price);
+        }
+
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             bool HasUndyingTotemDebuff = Player.GetModPlayer<mcrBuffsPlayer>().HasUndyingTotemDebuff;
